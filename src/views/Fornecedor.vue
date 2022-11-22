@@ -3,7 +3,14 @@
 </template>
 
 <script>
+import Fornecedor from '../services/fornecedor'
 export default {
-  name: 'fornecedorView'
+  name: 'fornecedorView',
+  mounted(){
+    Fornecedor.listar().then(resposta => {
+      console.log(resposta)
+    })
+  }
+
 }
 </script>

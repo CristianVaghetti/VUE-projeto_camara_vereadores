@@ -1,7 +1,4 @@
 <template>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-
     <div class="col mx-auto text-center" style="background-color: rgba(0, 0, 0, 0.2);">
         <img src="https://www.camaracapaodoleao.rs.gov.br/img/header-logo.png" alt="">
     </div>
