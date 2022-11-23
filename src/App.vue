@@ -1,9 +1,15 @@
 <template>
-    <div id="app" class="container">
+  <div id="app" class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
       <NavbarComp />
       <RouterView />
       <FooterComp />
     </div>
+    <div class="col-2"></div>
+
+
+  </div>
 </template>
 
 <script>
