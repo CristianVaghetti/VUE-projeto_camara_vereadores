@@ -6,7 +6,11 @@
           <div class="col-10">
             <h2>Fornecedores</h2>
           </div>
-          <div class="col-2"><button type="button" class="btn btn-success">Cadastrar</button></div>
+          <div class="col-2">
+            <router-link to="/fornecedor/cadastro" class="btn btn-outline-success">
+              <i class="bi bi-person-add">&nbsp;&nbsp;Cadastrar</i>
+            </router-link>
+          </div>
         </div>
       </div>
       <div class="card-body">
@@ -23,8 +27,9 @@
             <tr v-for="fornecedor of fornecedores">
               <td>{{ fornecedor.fornecedor_cnpj }}</td>
               <td>{{ fornecedor.fornecedor_nome }}</td>
-              <td><button style="background-color: rgba(0, 0, 255, 0.36)" type="button" class="btn"><i class="bi bi-pencil"></i></button></td>
-              <td><button style="background-color: rgba(255, 0, 0, 0.50)" type="button" class="btn"><i class="bi bi-trash"></i></button></td>
+              <td><button class="btn btn-outline-primary"><i class="bi bi-pencil"></i></button></td>
+              <td><button @click="deletarFornecedor(fornecedor)" class="btn btn-outline-danger"><i
+                    class="bi bi-trash"></i></button></td>
             </tr>
           </tbody>
         </table>
@@ -34,21 +39,44 @@
 </template>
 
 <script>
+import addFornecedor from '../components/addFornecedor.vue'
 import Fornecedor from '../services/fornecedor'
 export default {
   name: 'fornecedorView',
 
+  components: {
+    addFornecedor
+  },
+
   data() {
     return {
+
+      fornecedor: {
+        fornecedor_cnpj: '',
+        fornecedor_nome: '',
+      },
       fornecedores: [],
     }
   },
 
   mounted() {
-    Fornecedor.listar().then(resposta => {
-      console.log(resposta.data)
+    this.listar()
+  },
+
+  methods: {
+    deletarFornecedor(fornecedor) {
+      if (confirm("Deseja realmente excluir " + fornecedor.fornecedor_nome + " ?")) {
+        Fornecedor.deletar(fornecedor).then(resposta => {
+          this.listar()
+        })
+      }
+    },
+
+    listar(){
+      Fornecedor.listar().then(resposta => {
       this.fornecedores = resposta.data
     })
+    }
   }
 }
 </script>
