@@ -9,6 +9,10 @@ export default{
         return http.post('/fornecedor/', fornecedor)
     },
 
+    editar:(fornecedor) =>{
+        return http.put('/fornecedor/'+ fornecedor.fornecedor_id)
+    },
+
     deletar:(fornecedor) => {
         return http.delete('/fornecedor/'+ fornecedor.fornecedor_id)
     }
