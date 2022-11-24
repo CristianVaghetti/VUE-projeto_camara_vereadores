@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" style='margin-bottom: 20px;'>
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -9,7 +9,7 @@
                             <div class="row mb-3">
                                 <label for="nome" class="col-md-4 col-form-label text-md-end">Nome</label>
                                 <div class="col-md-6">
-                                    <input v-model="fornecedor.fornecedor_nome" class="form-control" required>
+                                    <input v-maska="'##.###.###/####-##'" v-model="fornecedor.fornecedor_nome" class="form-control" required>
                                 </div>
                             </div>
 
@@ -50,7 +50,7 @@ export default {
     methods:{
         adicionarFornecedor(){
             Fornecedor.salvar(this.fornecedor).then(resposta => {
-                this.$router.push('/fornecedor') 
+                this.$emit('atualiza')
             })
         }
     }

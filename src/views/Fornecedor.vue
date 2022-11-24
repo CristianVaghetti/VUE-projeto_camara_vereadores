@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div class="container row-justify-center">
+      <div v-if="mostrar">
+        <addFornecedor @atualiza="listar()"/>
+      </div>
+    </div>
     <div class="card">
       <div class="card-header">
         <div class="row">
@@ -7,9 +12,9 @@
             <h2>Fornecedores</h2>
           </div>
           <div class="col-2">
-            <router-link to="/fornecedor/cadastro" class="btn btn-outline-success">
+            <button @click="addEditFornecedor()" class="btn btn-outline-success">
               <i class="bi bi-person-add">&nbsp;&nbsp;Cadastrar</i>
-            </router-link>
+            </button>
           </div>
         </div>
       </div>
@@ -25,11 +30,10 @@
           </thead>
           <tbody>
             <tr v-for="fornecedor of fornecedores">
-              <td>{{ fornecedor.fornecedor_cnpj }}</td>
-              <td>{{ fornecedor.fornecedor_nome }}</td>
-              <td><button class="btn btn-outline-primary"><i class="bi bi-pencil"></i></button></td>
-              <td><button @click="deletarFornecedor(fornecedor)" class="btn btn-outline-danger"><i
-                    class="bi bi-trash"></i></button></td>
+              <td><input v-maska="'##.###.###/####-##'" v-model="fornecedor.fornecedor_cnpj"></td>
+              <td><input v-model="fornecedor.fornecedor_nome"></td>
+              <td><button @click="editarFornecedor(fornecedor)" class="btn btn-outline-primary"><i class="bi bi-pencil"></i></button></td>
+              <td><button @click="deletarFornecedor(fornecedor)" class="btn btn-outline-danger"><i class="bi bi-trash"></i></button></td>
             </tr>
           </tbody>
         </table>
@@ -50,6 +54,7 @@ export default {
 
   data() {
     return {
+      mostrar: true,
 
       fornecedor: {
         fornecedor_cnpj: '',
@@ -64,6 +69,13 @@ export default {
   },
 
   methods: {
+    listar() {
+      this.mostrar = false
+      Fornecedor.listar().then(resposta => {
+        this.fornecedores = resposta.data
+      })
+    },
+
     deletarFornecedor(fornecedor) {
       if (confirm("Deseja realmente excluir " + fornecedor.fornecedor_nome + " ?")) {
         Fornecedor.deletar(fornecedor).then(resposta => {
@@ -72,10 +84,8 @@ export default {
       }
     },
 
-    listar(){
-      Fornecedor.listar().then(resposta => {
-      this.fornecedores = resposta.data
-    })
+    editarFornecedor(fornecedor = false) {
+      console.log(fornecedor)
     }
   }
 }
