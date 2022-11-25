@@ -1,15 +1,22 @@
 <template>
-    <div class="container" style='margin-bottom: 20px;'>
+    <div class="container" style="margin-bottom: 20px;">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Cadastrar Fornecedor</div>
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-10" ><h5>Cadastrar Fornecedor</h5></div>
+                            
+                            <div class="col-2" style="text-align: end"><button class="btn btn-outline-danger" @click="fechar()"><i class="bi bi-x-lg"></i></button></div>
+                        </div>
+                    </div>
+                   
                     <div class="card-body">
                         <form @submit.prevent="adicionarFornecedor">
                             <div class="row mb-3">
                                 <label for="nome" class="col-md-4 col-form-label text-md-end">Nome</label>
                                 <div class="col-md-6">
-                                    <input v-maska="'##.###.###/####-##'" v-model="fornecedor.fornecedor_nome" class="form-control" required>
+                                    <input v-model="fornecedor.fornecedor_nome" class="form-control" required>
                                 </div>
                             </div>
 
@@ -50,8 +57,12 @@ export default {
     methods:{
         adicionarFornecedor(){
             Fornecedor.salvar(this.fornecedor).then(resposta => {
-                this.$emit('atualiza')
+                this.fechar()
             })
+        },
+
+        fechar(){
+            this.$emit('atualiza')
         }
     }
 }

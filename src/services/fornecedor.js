@@ -10,10 +10,10 @@ export default{
     },
 
     editar:(fornecedor) =>{
-        return http.put('/fornecedor/'+ fornecedor.fornecedor_id)
+        return http.put('/fornecedor/' + fornecedor.fornecedor_id + '/', fornecedor)
     },
 
     deletar:(fornecedor) => {
-        return http.delete('/fornecedor/'+ fornecedor.fornecedor_id)
+        return http.delete('/fornecedor/' + fornecedor.fornecedor_id)
     }
 }
