@@ -12,11 +12,6 @@ const routes = [
     component: () => import('../views/Fornecedor.vue')
   },
   {
-    path: '/fornecedor/cadastro',
-    name: 'addFornecedor',
-    component: () => import('../components/addFornecedor.vue')
-  },
-  {
     path: '/vereador',
     name: 'vereadorView',
     component: () => import('../views/Vereador.vue')

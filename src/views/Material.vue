@@ -1,7 +1,7 @@
 <template>
   <div class="container row-justify-center">
     <div v-if="cadastro">
-      O meu time!
+      <addMaterial @atualiza="listar()"/>
     </div>
   </div>
   <div class="card">
@@ -11,7 +11,7 @@
           <h2>Materiais</h2>
         </div>
         <div class="col-2">
-          <button @click="addMaterial()" class="btn btn-outline-success">
+          <button @click="cadMatetial()" class="btn btn-outline-success">
             <i class="bi bi-person-add">&nbsp;&nbsp;Cadastrar</i>
           </button>
         </div>
@@ -23,7 +23,9 @@
           <tr>
             <th scope="col" class="col-3">Descrição</th>
             <th scope="col" class="col-2">Quantidade</th>
-            <th scope="col" class="col-4">Fornecedor</th>
+            <th scope="col" class="col-2" v-if="adicionar"></th>
+            <th scope="col" class="col-3">Fornecedor</th>
+            <th scope="col" class="col-2">Tipo</th>
             <th scope="col" class="col-1">Valor</th>
             <th></th>
             <th></th>
@@ -31,12 +33,18 @@
         </thead>
         <tbody>
           <tr v-for="material of materiais">
-            <td>{{material.material_descricao}}</td>
-            <td>{{material.material_quantidade}}</td>
-            <td>Nome fornecedor</td>
-            <td>{{material.material_valor}}</td>
-            <td><button class="btn btn-outline-success"><i class="bi bi-plus-lg"></i></button></td>
-            <td><button class="btn btn-outline-primary"><i class="bi bi-arrow-right"></i></button></td>
+            <td>{{ material.material_descricao }}</td>
+            <td >{{ material.material_quantidade }}</td>
+            <td v-if="adicionar && qualEditar == material.material_id"><input v-model="material.material_quantidadeAdd" type="number" class="form-control"></td>
+            <td v-if="adicionar && qualEditar != material.material_id"></td>
+            <td>Fornecedor</td>
+            <td>Cozinha</td>
+            <td>{{ material.material_valor }}</td>
+            <td v-if="adicionar && qualEditar == material.material_id"><button @click="salvaAdd(material)" class="btn btn-outline-success"><i class="bi bi-check2"></i></button></td>
+            <td v-else><button @click="addMaterial(material)" class="btn btn-outline-success"><i class="bi bi-plus-lg"></i></button></td>
+            
+            <td v-if="adicionar && qualEditar == material.material_id"><button @click="listar()" class="btn btn-outline-danger"><i class="bi bi-x-lg"></i></button></td>
+            <td v-else><button @click="utilizarMaterial(material)" class="btn btn-outline-primary"><i class="bi bi-arrow-right"></i></button></td>
           </tr>
         </tbody>
       </table>
@@ -46,8 +54,14 @@
 
 <script>
 import Material from "../services/material"
+import Utilizar from "../services/utilizar"
+import addMaterial from '../components/addMaterial.vue'
 export default {
   name: 'materialView',
+
+  components: {
+    addMaterial
+  },
 
   mounted() {
     this.listar()
@@ -56,11 +70,14 @@ export default {
   data() {
     return {
       cadastro: false,
+      adicionar: false,
       material: {
         material_descricao: '',
         material_quantidade: '',
         material_valor: '',
-        material_detalhes: ''
+        material_fornecedor: '',
+        material_tipo: '',
+        material_quantidadeAdd:''
       },
       materiais: []
     }
@@ -68,14 +85,29 @@ export default {
   methods: {
     listar() {
       this.cadastro = false
+      this.adicionar = false
       Material.listar().then(resposta => {
         this.materiais = resposta.data
-        console.log(this.materiais)
       })
     },
-    addMaterial() {
-      this.cadastro = true
 
+    cadMatetial() {
+      this.cadastro = true
+    },
+
+    addMaterial(material){
+      this.adicionar = true
+      this.qualEditar = material.material_id
+    },
+
+    salvaAdd(material){
+      Material.editar(material).then(resposta =>{
+        this.listar()
+      })
+    },
+
+    utilizarMaterial(material) {
+      console.log(material)
     }
   }
 }
