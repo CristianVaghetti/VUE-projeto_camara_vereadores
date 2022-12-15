@@ -1,7 +1,10 @@
 <template>
   <div class="container row-justify-center">
     <div v-if="cadastro">
-      <addMaterial @atualiza="listar()"/>
+      <addMaterial @atualiza="listar()" />
+    </div>
+    <div v-if="utilizar">
+      <usarMaterial @atualiza="listar()" :idMaterial="this.qualUsar"/>
     </div>
   </div>
   <div class="card">
@@ -34,16 +37,20 @@
         <tbody>
           <tr v-for="material of materiais">
             <td>{{ material.material_descricao }}</td>
-            <td >{{ material.material_quantidade }}</td>
-            <td v-if="adicionar && qualEditar == material.material_id"><input v-model="material.material_quantidadeAdd" type="number" class="form-control"></td>
+            <td>{{ material.material_quantidade }}</td>
+            <td v-if="adicionar && qualEditar == material.material_id"><input v-model="material.material_quantidadeAdd"
+                type="number" class="form-control"></td>
             <td v-if="adicionar && qualEditar != material.material_id"></td>
             <td>Fornecedor</td>
-            <td>Cozinha</td>
+            <td v-bind="tipoMaterial(material)">{{this.materialTipo}}</td>
             <td>{{ material.material_valor }}</td>
-            <td v-if="adicionar && qualEditar == material.material_id"><button @click="salvaAdd(material)" class="btn btn-outline-success"><i class="bi bi-check2"></i></button></td>
-            <td v-else><button @click="addMaterial(material)" class="btn btn-outline-success"><i class="bi bi-plus-lg"></i></button></td>
-            
-            <td v-if="adicionar && qualEditar == material.material_id"><button @click="listar()" class="btn btn-outline-danger"><i class="bi bi-x-lg"></i></button></td>
+            <td v-if="adicionar && qualEditar == material.material_id"><button @click="salvaAdd(material)"
+                class="btn btn-outline-success"><i class="bi bi-check2"></i></button></td>
+            <td v-else><button @click="addMaterial(material)" class="btn btn-outline-success"><i
+                  class="bi bi-plus-lg"></i></button></td>
+
+            <td v-if="adicionar && qualEditar == material.material_id"><button @click="listar()"
+                class="btn btn-outline-danger"><i class="bi bi-x-lg"></i></button></td>
             <td v-else><button @click="utilizarMaterial(material)" class="btn btn-outline-primary"><i class="bi bi-arrow-right"></i></button></td>
           </tr>
         </tbody>
@@ -54,13 +61,14 @@
 
 <script>
 import Material from "../services/material"
-import Utilizar from "../services/utilizar"
 import addMaterial from '../components/addMaterial.vue'
+import usarMaterial from '../components/usarMateterial.vue'
 export default {
   name: 'materialView',
 
   components: {
-    addMaterial
+    addMaterial,
+    usarMaterial
   },
 
   mounted() {
@@ -71,21 +79,23 @@ export default {
     return {
       cadastro: false,
       adicionar: false,
+      utilizar: false,
       material: {
         material_descricao: '',
         material_quantidade: '',
         material_valor: '',
         material_fornecedor: '',
         material_tipo: '',
-        material_quantidadeAdd:''
+        material_quantidadeAdd: ''
       },
-      materiais: []
+      materiais: [],
     }
   },
   methods: {
     listar() {
       this.cadastro = false
       this.adicionar = false
+      this.utilizar = false
       Material.listar().then(resposta => {
         this.materiais = resposta.data
       })
@@ -95,19 +105,34 @@ export default {
       this.cadastro = true
     },
 
-    addMaterial(material){
+    addMaterial(material) {
       this.adicionar = true
       this.qualEditar = material.material_id
     },
 
-    salvaAdd(material){
-      Material.editar(material).then(resposta =>{
+    salvaAdd(material) {
+      Material.editar(material).then(resposta => {
         this.listar()
       })
     },
 
     utilizarMaterial(material) {
-      console.log(material)
+      this.qualUsar = material.material_id
+      this.utilizar = true
+    },
+    
+    tipoMaterial(material){
+      switch(material.material_tipo){
+        case 1: 
+          this.materialTipo = "Limpeza"
+          break
+        case 2:
+          this.materialTipo = "Cozinha"
+            break
+        case 3:
+          this.materialTipo = "Escritório"
+            break
+      }
     }
   }
 }

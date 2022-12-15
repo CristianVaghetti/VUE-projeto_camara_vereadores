@@ -30,7 +30,7 @@
         <tbody>
           <tr v-for="fornecedor of fornecedores">
             <td v-if="editar && qualEditar === fornecedor.fornecedor_id"><input v-maska="'##.###.###/####-##'" v-model="fornecedor.fornecedor_cnpj"></td>
-            <td v-else>{{fornecedor.fornecedor_cnpj}}</td>
+            <td v-else><a target="_blank" :href="'https://solucoes.receita.fazenda.gov.br/Servicos/cnpjreva/Cnpjreva_Solicitacao.asp?cnpj='+fornecedor.fornecedor_cnpj"><button class="btn btn-outline-secondary">{{fornecedor.fornecedor_cnpj}}</button></a></td>
             <td v-if="editar && qualEditar === fornecedor.fornecedor_id"><input v-model="fornecedor.fornecedor_nome"></td>
             <td v-else>{{fornecedor.fornecedor_nome}}</td>
             <td v-if="editar && qualEditar === fornecedor.fornecedor_id"><button @click="editarFornecedor(fornecedor)" class="btn btn-outline-success"><i class="bi bi-check2"></i></button></td>

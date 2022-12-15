@@ -2,7 +2,7 @@
     <div class="col mx-auto text-center" style="background-color: rgba(0, 0, 0, 0.2);">
         <img src="https://www.camaracapaodoleao.rs.gov.br/img/header-logo.png" alt="">
     </div>
-    <div class="row">
+    <div class="row bg-light">
         <div class="col"></div>
         <div class="col">
             <nav class="navbar navbar-expand-sm bg-light navbar-dark">

@@ -36,14 +36,16 @@
                                 </div>
                             </div>
 
-                            <!-- <div class="row mb-3">
+                            <div class="row mb-3">
                                 <label class="col-md-4 col-form-label text-md-end">Tipo</label>
                                 <div class="col-md-6">
-                                    <select class="form-select" v-model="">
-                                        <option v-for="" v-bind:value="">{{}}</option>
+                                    <select class="form-select" v-model="material.material_tipo">
+                                        <option value="1">Limpeza</option>
+                                        <option value="2">Cozinha</option>
+                                        <option value="3">Escritório</option>
                                     </select>
                                 </div>
-                            </div> -->
+                            </div>
 
                             <div class="row mb-3">
                                 <label class="col-md-4 col-form-label text-md-end">Valor</label>
@@ -78,7 +80,7 @@ export default {
                 material_fornecedor: '',
                 material_quantidade: '',
                 material_valor: '',
-                tipo_material: 1
+                material_tipo: ''
             },
 
             fornecedores: {
@@ -89,8 +91,8 @@ export default {
     },
 
     mounted() {
-    this.listarFornecedores()
-  },
+        this.listarFornecedores()
+    },
 
     methods:{
         adicionarMaterial(){
