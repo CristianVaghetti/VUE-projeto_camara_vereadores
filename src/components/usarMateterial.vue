@@ -6,7 +6,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-10">
-                                <h5>Utilizar Material</h5>
+                                <h5>Utilizar Material {{idMaterial}}</h5>
                             </div>
 
                             <div class="col-2" style="text-align: end"><button class="btn btn-outline-danger"

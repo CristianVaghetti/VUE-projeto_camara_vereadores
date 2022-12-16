@@ -4,7 +4,7 @@
       <addMaterial @atualiza="listar()" />
     </div>
     <div v-if="utilizar">
-      <usarMaterial @atualiza="listar()" :idMaterial="this.qualUsar"/>
+      <usarMaterial @atualiza="listar()" idMaterial="{{this.qualUsar}}"/>
     </div>
   </div>
   <div class="card">
