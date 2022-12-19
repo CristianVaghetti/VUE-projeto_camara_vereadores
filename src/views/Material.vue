@@ -4,7 +4,7 @@
       <addMaterial @atualiza="listar()" />
     </div>
     <div v-if="utilizar">
-      <usarMaterial @atualiza="listar()" idMaterial="{{this.qualUsar}}"/>
+      <usarMaterial @atualiza="listar()" :idMaterial="this.qualUsar" />
     </div>
   </div>
   <div class="card">
@@ -41,7 +41,7 @@
             <td v-if="adicionar && qualEditar == material.material_id"><input v-model="material.material_quantidadeAdd"
                 type="number" class="form-control"></td>
             <td v-if="adicionar && qualEditar != material.material_id"></td>
-            <td>Fornecedor</td>
+            <td>{{ material.material_fornecedor }}</td>
             <td v-bind="tipoMaterial(material)">{{this.materialTipo}}</td>
             <td>{{ material.material_valor }}</td>
             <td v-if="adicionar && qualEditar == material.material_id"><button @click="salvaAdd(material)"

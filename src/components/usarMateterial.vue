@@ -6,7 +6,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-10">
-                                <h5>Utilizar Material {{idMaterial}}</h5>
+                                <h5>Utilizar Material</h5>
                             </div>
 
                             <div class="col-2" style="text-align: end"><button class="btn btn-outline-danger"
@@ -19,12 +19,11 @@
                             <div class="row mb-3">
                                 <label class="col-md-4 col-form-label text-md-end">Destino</label>
                                 <div class="col-md-6">
-                                    <select class="form-select" v-model="utilizado.destino_id">
+                                    <select class="form-select" v-model="utilizado.destino_id" required>
                                         <option value="1">Limpeza</option>
                                         <option value="2">Cozinha</option>
                                         <option value="3">Escritório</option>
-                                        <option v-for="vereador of vereadores" v-bind:value="vereador.vereador_id">
-                                            {{ vereador.vereador_nome }}</option>
+                                        <option v-for="vereador of vereadores" v-bind:value="vereador.vereador_id">{{ vereador.vereador_nome }}</option>
                                     </select>
                                 </div>
                             </div>
