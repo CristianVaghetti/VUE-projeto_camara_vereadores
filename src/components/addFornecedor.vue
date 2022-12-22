@@ -23,7 +23,7 @@
                             <div class="row mb-3">
                                 <label for="CNPJ" class="col-md-4 col-form-label text-md-end">CNPJ</label>
                                 <div class="col-md-6">
-                                    <input v-maska="'##.###.###/####-##'" v-model="fornecedor.fornecedor_cnpj" class="form-control" required>
+                                    <input v-maska data-maska="##.###.###/####-##" v-model="fornecedor.fornecedor_cnpj" class="form-control" required>
                                 </div>
                             </div>
 
