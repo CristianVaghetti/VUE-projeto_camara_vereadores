@@ -22,7 +22,8 @@
         <thead class="thead-dark">
           <tr>
             <th scope="col" class="col-4">Matrícula</th>
-            <th scope="col" class="col-7">Nome</th>
+            <th scope="col" class="col-5">Nome</th>
+            <th scope="col" class="col-2"></th>
             <th></th>
             <th></th>
           </tr>
@@ -33,6 +34,7 @@
             <td v-else>{{vereador.vereador_matricula}}</td>
             <td v-if="editar && qualEditar === vereador.vereador_id"><input v-model="vereador.vereador_nome"></td>
             <td v-else>{{vereador.vereador_nome}}</td>
+            <td><button class="btn btn-outline-secondary">Detalhes</button></td>
             <td v-if="editar && qualEditar === vereador.vereador_id"><button @click="editarVereador(vereador)" class="btn btn-outline-success"><i class="bi bi-check2"></i></button></td>
             <td v-else><button @click="habilitarEdicao(vereador)" class="btn btn-outline-primary"><i class="bi bi-pencil"></i></button></td>
             <td v-if="editar && qualEditar === vereador.vereador_id"><button @click="listar()" class="btn btn-outline-danger"><i class="bi bi-x-lg"></i></button></td>

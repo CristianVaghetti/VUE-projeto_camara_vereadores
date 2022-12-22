@@ -51,6 +51,7 @@
                                 <label class="col-md-4 col-form-label text-md-end">Valor</label>
                                 <div class="col-md-6">
                                     <input
+                                        v-model="material.material_valor"
                                         class="form-control"
                                         v-maska
                                         data-maska="9 99#,##"
