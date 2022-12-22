@@ -42,7 +42,7 @@
                 type="number" class="form-control"></td>
             <td v-if="adicionar && qualEditar != material.material_id"></td>
             <td>{{ material.material_fornecedor }}</td>
-            <td v-bind="tipoMaterial(material)">{{this.materialTipo}}</td>
+            <td>{{ material.material_tipo }}</td>
             <td>{{ material.material_valor }}</td>
             <td v-if="adicionar && qualEditar == material.material_id"><button @click="salvaAdd(material)"
                 class="btn btn-outline-success"><i class="bi bi-check2"></i></button></td>
@@ -121,19 +121,6 @@ export default {
       this.utilizar = true
     },
     
-    tipoMaterial(material){
-      switch(material.material_tipo){
-        case 1: 
-          this.materialTipo = "Limpeza"
-          break
-        case 2:
-          this.materialTipo = "Cozinha"
-            break
-        case 3:
-          this.materialTipo = "Escritório"
-            break
-      }
-    }
   }
 }
 </script>
