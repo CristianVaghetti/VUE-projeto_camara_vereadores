@@ -40,9 +40,7 @@
                                 <label class="col-md-4 col-form-label text-md-end">Tipo</label>
                                 <div class="col-md-6">
                                     <select class="form-select" v-model="material.material_tipo">
-                                        <option value="1">Limpeza</option>
-                                        <option value="2">Cozinha</option>
-                                        <option value="3">Escritório</option>
+                                        <option v-for="tipos of tiposMaterial" v-bind:value="tipos.tipo_id">{{tipos.tipo_descricao}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -77,6 +75,7 @@
 <script>
 import Material from '../services/material'
 import Fornecedor from '../services/fornecedor'
+import Tipos from '../services/tiposMaterial'
 export default {
     name: 'addMaterial',
 
@@ -90,15 +89,15 @@ export default {
                 material_tipo: ''
             },
 
-            fornecedores: {
-                fornecedor_id: '',
-                fornecedor_nome: ''
-            }
+            fornecedores: [],
+
+            tiposMaterial: []
         }
     },
 
     mounted() {
         this.listarFornecedores()
+        this.listarTiposMaterial()
     },
 
     methods:{
@@ -115,6 +114,12 @@ export default {
         listarFornecedores(){
             Fornecedor.listar().then(resposta => {
                 this.fornecedores = resposta.data
+            })
+        },
+
+        listarTiposMaterial(){
+            Tipos.listar().then(resposta => {
+                this.tiposMaterial = resposta.data
             })
         }
     }
