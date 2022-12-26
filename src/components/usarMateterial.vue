@@ -19,10 +19,8 @@
                             <div class="row mb-3">
                                 <label class="col-md-4 col-form-label text-md-end">Destino</label>
                                 <div class="col-md-6">
-                                    <select class="form-select" v-model="utilizado.destino_id" required>
-                                        <option value="1">Limpeza</option>
-                                        <option value="2">Cozinha</option>
-                                        <option value="3">Escritório</option>
+                                    <select class="form-select" v-model="utilizado.utilizador_id" required>
+                                        <option v-for="destino of destinos" v-bind:value="destino.destino_id">{{ destino.destino_descricao }}</option>
                                         <option v-for="vereador of vereadores" v-bind:value="vereador.vereador_id">{{ vereador.vereador_nome }}</option>
                                     </select>
                                 </div>
@@ -51,6 +49,7 @@
 <script>
 import Vereador from '../services/vereador'
 import Utilizar from "../services/utilizar"
+import Destino from '../services/destino'
 export default {
     name: 'usarMaterial',
 
@@ -59,9 +58,11 @@ export default {
     data() {
         return {
             vereadores: [],
+            destinos: [],
             utilizado: {
                 material_id: this.idMaterial,
                 utilizado_quantidade: '',
+                utilizador_id: '',
                 destino_id: ''
             }
         }
@@ -69,6 +70,7 @@ export default {
 
     mounted() {
         this.listarVereadores()
+        this.listarDestinos()
     },
 
     methods: {
@@ -81,8 +83,20 @@ export default {
             })
         },
         utilizarMaterial() {
+            if(Number.isInteger(this.utilizado.utilizador_id)){
+                this.utilizado.destino_id = this.utilizado.utilizador_id
+                this.utilizado.utilizador_id = null
+            } else {
+                this.utilizado.destino_id = null
+            }
+            
             Utilizar.salvar(this.utilizado).then(resposta => {
                 this.fechar()
+            })
+        },
+        listarDestinos() {
+            Destino.listar().then(resposta => {
+                this.destinos = resposta.data
             })
         }
     },
