@@ -5,6 +5,10 @@ export default{
         return http.get('/vereador')
     },
 
+    consultar:(vereador) => {
+        return http.get('/vereador/' + vereador.vereador_id + '/detalhes/')
+    },
+
     salvar:(vereador) => {
         return http.post('/vereador/', vereador)
     },

@@ -30,7 +30,7 @@
         </thead>
         <tbody>
           <tr v-for="vereador of vereadores">
-            <td v-if="editar && qualEditar === vereador.vereador_id"><input v-maska="'######'" v-model="vereador.vereador_matricula"></td>
+            <td v-if="editar && qualEditar === vereador.vereador_id"><input v-maska data-maska="######" v-model="vereador.vereador_matricula"></td>
             <td v-else>{{vereador.vereador_matricula}}</td>
             <td v-if="editar && qualEditar === vereador.vereador_id"><input v-model="vereador.vereador_nome"></td>
             <td v-else>{{vereador.vereador_nome}}</td>
