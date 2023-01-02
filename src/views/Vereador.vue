@@ -1,7 +1,10 @@
 <template>
   <div class="container row-justify-center">
+    <div v-if="detalhar">
+      <vereadorDetalhe @atualiza="listar()" :detalhamento="this.vereador_detalhes" />
+    </div>
     <div v-if="mostrar">
-      <addVereador @atualiza="listar()"/>
+      <addVereador @atualiza="listar()" />
     </div>
   </div>
   <div class="card">
@@ -34,7 +37,7 @@
             <td v-else>{{vereador.vereador_matricula}}</td>
             <td v-if="editar && qualEditar === vereador.vereador_id"><input v-model="vereador.vereador_nome"></td>
             <td v-else>{{vereador.vereador_nome}}</td>
-            <td><button class="btn btn-outline-secondary">Detalhes</button></td>
+            <td><button @click="detalhes(vereador)" class="btn btn-outline-secondary">Detalhes</button></td>
             <td v-if="editar && qualEditar === vereador.vereador_id"><button @click="editarVereador(vereador)" class="btn btn-outline-success"><i class="bi bi-check2"></i></button></td>
             <td v-else><button @click="habilitarEdicao(vereador)" class="btn btn-outline-primary"><i class="bi bi-pencil"></i></button></td>
             <td v-if="editar && qualEditar === vereador.vereador_id"><button @click="listar()" class="btn btn-outline-danger"><i class="bi bi-x-lg"></i></button></td>
@@ -48,18 +51,21 @@
 
 <script>
 import addVereador from '../components/addVereador.vue'
+import vereadorDetalhe from '../components/vereadorDetalhe.vue'
 import Vereador from '../services/vereador'
 export default {
   name: 'vereadorView',
 
   components: {
-    addVereador
+    addVereador,
+    vereadorDetalhe
   },
 
   data() {
     return {
       mostrar: false,
       editar: false,
+      detalhar: false,
 
       vereador: {
         vereador_matricula: '',
@@ -77,6 +83,7 @@ export default {
     listar() {
       this.mostrar = false
       this.editar = false
+      this.detalhar = false
       Vereador.listar().then(resposta => {
         this.vereadores = resposta.data
       })
@@ -101,7 +108,14 @@ export default {
 
     editarVereador(vereador) {
       Vereador.editar(vereador).then(resposta => {
-          this.listar()
+        this.listar()
+      })
+    },
+
+    detalhes(vereador) {
+      Vereador.consultar(vereador).then(resposta => {
+        this.detalhar = true
+        this.vereador_detalhes = resposta.data
       })
     }
   }
